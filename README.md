@@ -47,6 +47,36 @@ CVCCV: 37473 (e.g., 'dinna')
 
 Pragmatic usage :
 
+You can use
+
+```python
+from kab_phonolyzer.phono import process_corpus, analyze_corpus
+```
+
+Process a Corpus :
+
+```python
+from kab_phonolyzer.phono import process_corpus
+
+# Process a file and get raw data
+fdist, examples = process_corpus("kab.txt", batch_size=1000)
+
+# Access frequency distribution and examples
+print(fdist.most_common(5))  # Top 5 patterns
+print(examples["CVC"])  # Example words for pattern "CVC"
+```
+
+Analyze and save results :
+
+```python
+from kab_phonolyzer.phono import analyze_corpus
+
+# Analyze and save to CSV
+analyze_corpus("kab.txt", top_n=10, batch_size=500, output="results.csv")
+```
+
+Pragmatic usage :
+
 ```python
 from kab_phonolyzer.phono import process_corpus
 
@@ -60,4 +90,14 @@ with open("custom_results.csv", "w", newline="") as f:
     for pattern, freq in fdist.most_common(20):
         ex = random.choice(examples.get(pattern, ["No example"]))
         writer.writerow([pattern, freq, ex])
+```
+
+Convert a Single Word to CV Pattern :
+
+```python
+from kab_phonolyzer.phono import word_to_cv
+
+word = "aselkim"
+cv_pattern = word_to_cv(word)
+print(f"'{word}' → {cv_pattern}")  # Output: 'vcvccvc'
 ```
